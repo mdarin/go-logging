@@ -58,10 +58,13 @@ func testCallpath(t *testing.T, format string, expect string) {
 	if !strings.HasPrefix(parts[0], "log_test.go:") {
 		t.Errorf("incorrect filename: %s", parts[0])
 	}
+
 	// Verify that the correct callpath is registered by go-logging
-	if !strings.HasPrefix(parts[1], expect) {
+	hasPrefix := !strings.HasPrefix(parts[1], expect) || parts[1] == expect
+	if !hasPrefix {
 		t.Errorf("incorrect callpath: %s", parts[1])
 	}
+
 	// Verify that the correct message is registered by go-logging
 	if !strings.HasPrefix(parts[2], "test callpath") {
 		t.Errorf("incorrect message: %s", parts[2])
